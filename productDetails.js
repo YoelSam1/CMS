@@ -1,11 +1,10 @@
-const BASE_URL = 'http://yoel-site.local/wp-json/wc/store/products';
 
 const urlParams = new URLSearchParams(window.location.search)
 const productId = urlParams.get("id")
 
 async function fetchSingleData() {
     try {
-        const response = await fetch(BASE_URL+`/${productId}`);
+        const response = await fetch('http://localhost:10004/wp-json/wc/store/products'+`/${productId}`);
         const data = await response.json();
         return data;
     } catch(err) {
@@ -27,10 +26,26 @@ async function renderData() {
             <div class="imgCon" product_id="${id}">
                 <img src="${images[0].thumbnail}" alt="" />
             </div>
-            <p>${prices.currency_prefix}${(prices.price / 100).toFixed(2)}</p>
-            <button>Add to Card</button>
+            <div class="detail">
+                <h3>${name}</h3>
+                <p>${prices.currency_prefix}${(prices.price / 100).toFixed(2)}</p>
+                <button>Add to Card</button>
+            </div>
         </div>
     `
 }
 
 renderData()
+
+async function renderFeaturedData() {
+    const featuredCon = document.querySelector('.featured-container');
+    let data = await fetchData();
+   
+    // this id is going to exist only in product detail page
+    // if it exists filter and remove the product
+
+    data = data.filter(d => d.id  != productId)
+    console.log(data)
+    render(data, featuredCon)
+}
+renderFeaturedData()

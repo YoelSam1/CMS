@@ -1,4 +1,4 @@
-const BASE_URL = 'http://yoel-site.local/wp-json/wc/store/products';
+const BASE_URL = 'http://localhost:10004/wp-json/wc/store/products';
 
 const V_KEY = 'ck_f27c1aed10ab65ccc254f16a62da0f8dccbb9773';
 const V_SECRET = 'cs_21541c30fa1dcc8215e8ec9638e3e74b85117c6c';
@@ -19,12 +19,14 @@ async function fetchData() {
         
   
 async function renderData() {
-    const mainContainer = document.querySelector('#main-container');
+    const mainContainer = document.querySelector('.main-container');
     const data = await fetchData();
-    console.log(data)
+    render(data, mainContainer)
+}
+function render(data, container){
     data.forEach(element => {
         const {id,name, images, prices} = element
-        mainContainer.innerHTML += `
+        container.innerHTML += `
             <div class="card">
                 <div class="imgCon" product_id="${id}">
                     <img src="${images[0].thumbnail}" alt="" />
@@ -55,7 +57,7 @@ renderData()
 
 
 
-fetchSingleData(23)
+
 
 
 
