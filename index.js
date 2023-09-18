@@ -26,7 +26,7 @@ async function renderData() {
 function render(data, container){
     data.forEach(element => {
         const {id,name, images, prices} = element
-        container.innerHTML += `
+        if ( container) { container.innerHTML += `
             <div class="card">
                 <div class="imgCon" product_id="${id}">
                     <img src="${images[0].thumbnail}" alt="" />
@@ -37,7 +37,7 @@ function render(data, container){
                     <button>Add to Card</button>
                 </div>
             </div>
-        `
+        `}
     });
 
     let imgConEls= document.getElementsByClassName("imgCon")

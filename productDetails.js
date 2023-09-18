@@ -13,7 +13,18 @@ async function fetchSingleData() {
         
   }
 
-    
+  async function fetchFeaturedProducts() {
+    try {
+        const response = await fetch('http://localhost:10004/wp-json/wc/store/products?featured=true');
+        const data = await response.json();
+        //console.log(data)
+        return data;
+    } catch(err) {
+        console.log(err)
+    }
+        
+  }
+     
 async function renderData() {
     const mainContainer = document.querySelector('#product-container');
     const data = await fetchSingleData();
@@ -39,7 +50,7 @@ renderData()
 
 async function renderFeaturedData() {
     const featuredCon = document.querySelector('.featured-container');
-    let data = await fetchData();
+    let data = await fetchFeaturedProducts();
    
     // this id is going to exist only in product detail page
     // if it exists filter and remove the product
